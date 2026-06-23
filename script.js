@@ -13,6 +13,9 @@ score0El.textContent = 0;
 score1El.textContent = 0;
 diceEl.classList.add('hidden');
 
+// Active player
+let activePlayer = 0;
+
 // Storing the dice score in variable ;
 let currentScore = 0;
 
@@ -27,9 +30,11 @@ btnRoll.addEventListener('click', function () {
   diceEl.src = `dice-${dice}.png`;
   if (dice !== 1) {
     currentScore += dice;
-    current0El.textContent = currentScore;
+    document.getElementById(`current--${activePlayer}`).textContent =
+      currentScore;
   } else {
+    document.getElementById(`current--${activePlayer}`).textContent = 0;
     currentScore = 0;
-    current0El.textContent = currentScore;
+    activePlayer = activePlayer === 0 ? 1 : 0;
   }
 });
