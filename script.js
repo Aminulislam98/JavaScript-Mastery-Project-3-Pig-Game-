@@ -33,19 +33,29 @@ const switchPlayer = function () {
 
 // turning the current player current score 0
 const currentScoreZero = function () {
-  document.getElementById(`current--${activePlayer}`).textContent = 0;
+  document.getElementById(`current--0`).textContent = 0;
+  document.getElementById(`current--1`).textContent = 0;
   currentScore = 0;
 };
 
 // new game , reset al score;
 
 const playNewGame = function () {
+  // make current score 0
   currentScoreZero();
+  // make global scores 0
   globalScore[0] = 0;
   globalScore[1] = 0;
   score0El.textContent = 0;
   score1El.textContent = 0;
+  // hide the dice
   diceEl.classList.add('hidden');
+  // change the player dashboard active
+  player0El.classList.add('player--active');
+  player1El.classList.remove('player--active');
+
+  // switching the active player 0
+  activePlayer = 0;
 };
 
 // Rolling dice functionality;
@@ -72,18 +82,24 @@ btnRoll.addEventListener('click', function () {
 
 // Holding the current score into global active player;
 btnHold.addEventListener('click', function () {
-  // add current score to to active player's scorem
-  globalScore[activePlayer] += currentScore;
+  // checking player wining possibility to give result
 
-  // showing the totalScore in global
-  document.getElementById(`score--${activePlayer}`).textContent =
-    globalScore[activePlayer];
-
-  // turning the current player current score 0
-  currentScoreZero();
-
-  // Switching the player
-  switchPlayer();
+  if (globalScore[activePlayer] + currentScore >= 100) {
+    alert(
+      `Player ${activePlayer + 1} wins the match! 🥇 Current hold score is ${globalScore[activePlayer]} and current turn score is ${currentScore}. Total: ${globalScore[activePlayer]} + ${currentScore} = ${globalScore[activePlayer] + currentScore} 🎉🎉🔥`,
+    );
+    playNewGame();
+  } else {
+    // add current score to to active player's score
+    globalScore[activePlayer] += currentScore;
+    // showing the totalScore in global
+    document.getElementById(`score--${activePlayer}`).textContent =
+      globalScore[activePlayer];
+    // turning the current player current score 0
+    currentScoreZero();
+    // Switching the player
+    switchPlayer();
+  }
 });
 
 // Play new game;
