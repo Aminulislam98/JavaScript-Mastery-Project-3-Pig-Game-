@@ -57,6 +57,7 @@ const playNewGame = function () {
   // switching the active player 0
   activePlayer = 0;
 };
+playNewGame();
 
 // Rolling dice functionality;
 btnRoll.addEventListener('click', function () {
